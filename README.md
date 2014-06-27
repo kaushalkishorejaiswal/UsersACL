@@ -99,8 +99,9 @@ Zend Users ACL is a role based access control list  module for Zend Framework 2,
 	</li>
 	<li>
 		<pre>
-		Permissions : It contains all the actions name and resource_id for their actions.
-		Currently it contains all the actions of Application Index Controller.
+		Permissions : It contains all the actions name and resource_id for their 
+		actions. Currently it contains all the actions of Application 
+		Index Controller.
 		+----+-----------------+-------------+
 		| id | permission_name | resource_id |
 		+----+-----------------+-------------+
