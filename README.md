@@ -115,7 +115,8 @@ Zend Users ACL is a role based access control list  module for Zend Framework 2,
 	</li>
 	<li>
 		<pre>
-		User Role : It contains all the roles of the users, where user_id is the primary key of the users.
+		User Role : It contains all the roles of the users, 
+		where user_id is the primary key of the users.
 		+----+---------+---------+
 		| id | user_id | role_id |
 		+----+---------+---------+
@@ -129,7 +130,8 @@ Zend Users ACL is a role based access control list  module for Zend Framework 2,
 	<li>
 		<pre>
 		Role Permissions : It contails all the permission for the role, 
-		where role_id is the foreign key of role table and permission_id is the foreign key of permission table.
+		where role_id is the foreign key of role table and permission_id 
+		is the foreign key of permission table.
 		+----+---------+---------------+
 		| id | role_id | permission_id |
 		+----+---------+---------------+
