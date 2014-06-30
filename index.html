@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Usersacl by kaushalkishorejaiswal</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Usersacl</h1>
+        <h2>Users Access Control List for Zend FrameWork 2</h2>
+        <a href="https://github.com/kaushalkishorejaiswal/UsersACL" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Created by Kaushal Kishore <br>
+Email : <a href="mailto:kaushal.rahuljaiswal@gmail.com">kaushal.rahuljaiswal@gmail.com</a><br>
+Website : <a href="http://www.kaushalkishore.com">http://www.kaushalkishore.com</a><br></p>
+
+<h2>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>Zend Users ACL is a role based access control list  module for Zend Framework 2, which provides the authentication process for roles for using the actions of controller. You can easily manage the permissions for controller, actions by DB using this module. It contains Roles, Resources, Role Permissions, User Role and the Permission tables for managing the infromation of roles and permissions.</p>
+
+<p><b>Note:</b> This module is dependent on the <a href="https://github.com/kaushalkishorejaiswal/Users" target="_blank">Users</a> module. If you use the Users module then all the functionality of Users module and the UsersACL module will work perfectaly.</p>
+
+<h2>
+<a name="tables-structure-" class="anchor" href="#tables-structure-"><span class="octicon octicon-link"></span></a>Tables Structure :</h2>
+
+<ul>
+<li>
+        <pre>
+        <b>Permission Table:</b>
+        CREATE TABLE `permission` (
+          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `permission_name` varchar(45) NOT NULL,
+          `resource_id` int(10) unsigned NOT NULL,
+          PRIMARY KEY (`id`)
+        );
+        </pre>
+    </li>
+
+    <li>
+        <pre>
+        <b>Resource Table:</b>
+        CREATE TABLE `resource` (
+          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `resource_name` varchar(50) NOT NULL,
+          PRIMARY KEY (`id`)
+        );
+        </pre>
+    </li>
+    
+    <li>
+        <pre>
+        <b>Role Table:</b>
+        CREATE TABLE `role` (
+          `rid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `role_name` varchar(45) NOT NULL,
+          `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+          PRIMARY KEY (`rid`)
+        );
+        </pre>
+    </li>
+    
+    <li>
+        <pre>
+        <b>Role Permission Table:</b>
+        CREATE TABLE `role_permission` (
+          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `role_id` int(10) unsigned NOT NULL,
+          `permission_id` int(10) unsigned NOT NULL,
+          PRIMARY KEY (`id`)
+        )
+        </pre>
+    </li>
+    
+    <li>
+        <pre>
+        <b>User Role Table:</b>
+         CREATE TABLE `user_role` (
+          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+          `user_id` int(10) unsigned NOT NULL,
+          `role_id` int(10) unsigned NOT NULL,
+          PRIMARY KEY (`id`)
+        )
+        </pre>
+    </li>
+</ul><h2>
+<a name="tables-data-and-its-descriptions-" class="anchor" href="#tables-data-and-its-descriptions-"><span class="octicon octicon-link"></span></a>Tables Data and its descriptions :</h2>
+
+<ul>
+<li>
+        <pre>
+        Roles : It contains all the Roles for the ZF2 site users. 
+        Sample data :
+        +-----+-----------+--------+
+        | rid | role_name | status |
+        +-----+-----------+--------+
+        |   1 | Manager   | Active |
+        |   2 | Employee  | Active |
+        |   3 | Customer  | Active |
+        |   4 | Guest     | Active |
+        +-----+-----------+--------+
+        </pre>
+    </li>
+    <li>
+        <pre>
+        Resources : It contains all the controllers name with their full path.
+        +----+------------------------------+
+        | id | resource_name                |
+        +----+------------------------------+
+        |  1 | Application\Controller\Index |
+        |  2 | Album\Cotroller\Album        |
+        |  3 | Users\Controller\Index       |
+        +----+------------------------------+
+        </pre>
+    </li>
+    <li>
+        <pre>
+        Permissions : It contains all the actions name and resource_id for their 
+        actions. Currently it contains all the actions of Application 
+        Index Controller.
+        +----+-----------------+-------------+
+        | id | permission_name | resource_id |
+        +----+-----------------+-------------+
+        |  1 | index           |           1 |
+        |  5 | list            |           1 |
+        |  6 | add         |           1 |
+        |  7 | edit            |           1 |
+        |  8 | delete          |           1 |
+        |  9 | update          |           1 |
+        +----+-----------------+-------------+
+        </pre>
+    </li>
+    <li>
+        <pre>
+        User Role : It contains all the roles of the users, 
+        where user_id is the primary key of the users.
+        +----+---------+---------+
+        | id | user_id | role_id |
+        +----+---------+---------+
+        |  1 |       1 |       1 |
+        |  2 |       2 |       2 |
+        |  3 |       3 |       3 |
+        |  4 |       4 |       4 |
+        +----+---------+---------+
+        </pre>
+    </li>
+    <li>
+        <pre>
+        Role Permissions : It contails all the permission for the role, 
+        where role_id is the foreign key of role table and permission_id 
+        is the foreign key of permission table.
+        +----+---------+---------------+
+        | id | role_id | permission_id |
+        +----+---------+---------------+
+        |  1 |       1 |             1 |
+        |  9 |       1 |             5 |
+        | 10 |       1 |             6 |
+        | 11 |       2 |             7 |
+        | 12 |       3 |             8 |
+        | 13 |       4 |             9 |
+        | 14 |       1 |             7 |
+        +----+---------+---------------+
+        </pre>
+    </li>
+</ul><h2>
+<a name="functionality-of-the-usersacl-module" class="anchor" href="#functionality-of-the-usersacl-module"><span class="octicon octicon-link"></span></a>Functionality of the UsersACL Module:</h2>
+
+<ul>
+<li>Role base page access control</li>
+<li>All the things are handled by DB</li>
+</ul><h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ul>
+<li>Clone the UsersACL Module into your vendor folder</li>
+<li>Enabling it in your application.config.phpfile.</li>
+<li>Import the UsersACLData.sql file in your database, located in data folder of UsersACL module</li>
+</ul><h2>
+<a name="enable-the-module-in-applicationconfigphp" class="anchor" href="#enable-the-module-in-applicationconfigphp"><span class="octicon octicon-link"></span></a>Enable the module in application.config.php</h2>
+
+<pre>
+&lt;?php
+return array(
+    'modules' =&gt; array(
+        // ...
+        'UsersACL',
+    ),
+    // ...
+);
+</pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/kaushalkishorejaiswal/UsersACL/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/kaushalkishorejaiswal/UsersACL/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/kaushalkishorejaiswal/UsersACL"></a> is maintained by <a href="https://github.com/kaushalkishorejaiswal">kaushalkishorejaiswal</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
